@@ -13,22 +13,23 @@ import java.util.Scanner;
  * Created by adam on 10.11.16.
  * BackPack
  */
-public class BackpackImpl implements Backpack <Integer,Integer>{
-    private ArrayList<Pair<Integer,Integer>> itemsToPut;
-    private ArrayList<Pair<Integer,Integer>> itemsInBackpack;
+public class BackpackImpl implements Backpack<Integer, Integer> {
+    private ArrayList<Pair<Integer, Integer>> itemsToPut;
+    private ArrayList<Pair<Integer, Integer>> itemsInBackpack;
     private Integer backpack_size;
 
-    public BackpackImpl(){
+    public BackpackImpl() {
         this.itemsToPut = new ArrayList<>();
         this.backpack_size = 0;
         this.itemsInBackpack = new ArrayList<>();
     }
-     
-    public BackpackImpl(ArrayList<Pair<Integer, Integer>> it, Integer s){
+
+    public BackpackImpl(ArrayList<Pair<Integer, Integer>> it, Integer s) {
         this.itemsToPut = it;
         this.backpack_size = s;
         this.itemsInBackpack = new ArrayList<>();
     }
+
     @Override
     public Integer getSize() {
         return backpack_size;
@@ -60,35 +61,35 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
         try {
             Scanner input = new Scanner(file);
             backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
-            while(input.hasNextLine())
+            while (input.hasNextLine())
                 itemsToPut.add(new Pair(input.nextInt(), input.nextInt()));
-        }catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.printf("ERROR: %s\n", ex);
         }
     }
-    
-    public int getBackpackValue(){
-        
-        if( this.itemsInBackpack.isEmpty() )
+
+    public int getBackpackValue() {
+
+        if (this.itemsInBackpack.isEmpty())
             return 0;
-        
+
         int val = 0;
-        
-        for(int i = 0; i < this.itemsInBackpack.size(); i++)
+
+        for (int i = 0; i < this.itemsInBackpack.size(); i++)
             val += this.itemsInBackpack.get(i).getValue();
-        
+
         return val;
     }
 
 
-    public void packBrute(){
+    public void packBrute() {
 
-        if( this.itemsToPut.isEmpty() ){
+        if (this.itemsToPut.isEmpty()) {
             System.out.println("Nie ma przedmiotów do zapakowania!");
             return;
         }
 
-        if( this.itemsToPut.size() > 27){
+        if (this.itemsToPut.size() > 27) {
             System.out.println("Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ");
             return;
         }
@@ -102,8 +103,8 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
 
         boolean anything_fits = false;
 
-        for (long i  = 0; i < combinations; i++) {
-	/*
+        for (long i = 0; i < combinations; i++) {
+    /*
 	Iterujemy po wszystkich mo¿liwoœciach. Ka¿dy bit zmiennej
 	permutations odpowiada jednemu elementowi zbioru przedmiotów.
 	Jedynka oznacza, ¿e do³¹czamy dany przedmiot, zero, ¿e nie.
@@ -116,8 +117,7 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
             long current_perm;
 
             /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
-            for (int k = 0; k < num_items; k++)
-            {
+            for (int k = 0; k < num_items; k++) {
 
                 current_perm = i;
 			/*
@@ -139,12 +139,10 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
                     continue;
 
 
-
                 sum_weight += this.itemsToPut.get(k).getSize();
                 sum_value += this.itemsToPut.get(k).getValue();
 
-                if (sum_weight > this.backpack_size )
-                {
+                if (sum_weight > this.backpack_size) {
                     fits = false;
                     break;
                 }
@@ -157,8 +155,7 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
 
                 anything_fits = true;
 
-                if (sum_value > current_best_value)
-                {
+                if (sum_value > current_best_value) {
                     current_best_value = sum_value;
                     current_best_weight = sum_weight;
                     currentBest = i;
@@ -166,14 +163,13 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
             }
         }
 
-        if (!anything_fits){
+        if (!anything_fits) {
             System.out.println("Żaden przedmiot nie mieści się w plecaku!");
             return;
         }
 
         /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
-        for (int k = 0; k < num_items; k++)
-        {
+        for (int k = 0; k < num_items; k++) {
             long current_perm = currentBest;
 
             if (((current_perm >> k) & 1) != 1)
@@ -187,29 +183,45 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
         System.out.println("Plecak zapakowany!");
     }
 
-    public void packDivideAndCurb(){
+    public void packDivideAndCurb() {
         itemsToPut.sort(Pair::integerComparator);
-        System.out.println(itemsToPut);
+        Double topBoarder = countTopBoarder();
+
+    }
+
+    private Double countTopBoarder() {
+        Double topBoarder = 0.0;
+        Integer actualSize = 0;
+        for (Pair<Integer, Integer> item : itemsToPut) {
+            if (actualSize+item.getSize() <= backpack_size) {
+                topBoarder += item.getValue();
+                actualSize += item.getSize();
+            }
+            else {
+                return topBoarder+(backpack_size*1.0 - actualSize*1.0)/(item.getSize()*1.0);
+            }
+        }
+        return topBoarder;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String ret = "Lista przedmiotów do zapakowania:\n";
-        
-        if( this.itemsToPut.isEmpty() )
+
+        if (this.itemsToPut.isEmpty())
             ret += "Lista przedmiotów jest pusta!\n";
-        else       
-            for(int i = 0; i < this.itemsToPut.size(); i++)
+        else
+            for (int i = 0; i < this.itemsToPut.size(); i++)
                 ret += this.itemsToPut.get(i).toString() + "\n";
-        
+
         ret += "\n";
-        
+
         ret += "Plecak (rozmiar: " + this.backpack_size + ", wartość przedmiotów: " + this.getBackpackValue() + "):\n";
-        
-        if( this.itemsInBackpack.isEmpty() )
+
+        if (this.itemsInBackpack.isEmpty())
             ret += "Plecak jest pusty!\n";
         else
-            for(int i = 0; i < this.itemsInBackpack.size(); i++)
+            for (int i = 0; i < this.itemsInBackpack.size(); i++)
                 ret += this.itemsInBackpack.get(i).toString() + "\n";
         return ret;
     }
