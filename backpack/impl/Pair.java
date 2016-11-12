@@ -42,4 +42,10 @@ public class Pair <T,X> {
         String ret = "(S:" + this.size + ", V:" + this.value + ")";
         return ret;
     }
+
+    public static int integerComparator(Pair <Integer, Integer>a, Pair <Integer, Integer>b){
+        return (int)(a.getValue().doubleValue()/a.getSize().doubleValue() - b.getValue().doubleValue()/b.getSize().doubleValue());
+
+    }
+
 }
