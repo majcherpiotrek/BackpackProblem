@@ -16,7 +16,8 @@ public interface Backpack <T,X> {
 
     public Integer getSize();
     public void setSize(Integer size);
-    public ArrayList<Pair<T,X>> getItems();
+    public ArrayList<Pair<T,X>> getItemsToPut();
+    public ArrayList<Pair<T,X>> getItemsInBackpack();
     public void fillFromFile(String filename);
 
 }

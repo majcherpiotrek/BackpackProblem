@@ -1,8 +1,8 @@
-package com.pea.backpack.test;
+package backpack.test;
 
-import com.pea.backpack.Backpack;
-import com.pea.backpack.impl.BackpackImpl;
-import com.pea.backpack.impl.Pair;
+import backpack.Backpack;
+import backpack.impl.BackpackImpl;
+import backpack.impl.Pair;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -35,11 +35,11 @@ public class BackpackImplTest extends TestCase {
         assertEquals(new Integer(15), backpack.getSize());
     }
 
-    public void testGetItems() throws Exception {
+    public void testGetItemsToPut() throws Exception {
         Backpack backpack = getInitializedBackpack();
-        assertEquals(5, backpack.getItems().size());
-        for(int i=0; i<backpack.getItems().size();i++){
-            assertEquals(testItems.get(i),backpack.getItems().get(i));
+        assertEquals(5, backpack.getItemsToPut().size());
+        for(int i=0; i<backpack.getItemsToPut().size();i++){
+            assertEquals(testItems.get(i),backpack.getItemsToPut().get(i));
         }
     }
 
