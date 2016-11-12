@@ -25,6 +25,9 @@ public class BackpackProblem {
         
         System.out.print(plecak);
         
+        plecak.packBrute();
+        
+        System.out.println(plecak);
     }
     
 }

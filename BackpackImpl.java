@@ -88,6 +88,112 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
         return val;
     }
     
+    public void packBrute(){
+        
+        if( this.items.isEmpty() ){
+            System.out.println("Nie ma przedmiotów do zapakowania!");
+            return;
+        }
+         
+        if( this.items.size() > 27){
+            System.out.println("Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ");
+            return;
+        }
+        
+        int num_items = this.items.size();
+        long combinations = 1 << num_items;
+        
+        long currentBest = 0;
+	int current_best_value = 0;
+	int current_best_weight = 0;
+	
+        boolean anything_fits = false;
+        
+        for (long i  = 0; i < combinations; i++) {
+	/*
+	Iterujemy po wszystkich mo¿liwoœciach. Ka¿dy bit zmiennej
+	permutations odpowiada jednemu elementowi zbioru przedmiotów.
+	Jedynka oznacza, ¿e do³¹czamy dany przedmiot, zero, ¿e nie.
+	*/
+            
+            int sum_weight = 0;
+            int sum_value = 0;
+		
+            boolean fits = false;
+            long current_perm;
+            
+            /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
+		for (int k = 0; k < num_items; k++)
+		{
+			
+			current_perm = i;
+			/*
+			Sprawdzamy przynale¿noœæ
+			-> musimy dostaæ siê do k-tego bitu permutations, 
+			wiêc trzeba wykonaæ k razy przesuniêcie bitowe 
+			w prawo, aby otrzymaæ ten bit na najni¿szej pozycji
+	
+			Za pomoc¹ AND sprawdzamy, czy ten bit to 0 czy 1, porównuj¹c go z 1
+			(jeœli bêdzie jeden to w wyniku bitowego iloczynu logicznego dostaniemy
+			1, w innym wypadku zero)
+			1000010101000000001
+			0000000000000000001
+			-------------------
+			0000000000000000001
+		
+			Jeœli równe 0 to znaczy, ¿e przedmiot nie nale¿y do kombinacji i kontynuujemy pêtle*/
+			if (((current_perm >> k) & 1) != 1)
+				continue;
+
+				
+
+			sum_weight += this.items.get(k).getSize();
+			sum_value += this.items.get(k).getValue();
+			
+			if (sum_weight > this.backpack_size ) 
+			{
+				fits = false;
+				break;
+			}
+
+			fits = true;
+                        
+                        /*Jeœli suma wag przedmiotów kombinacji wiêksza ni¿ pojemnoœæ plecaka to sprawdzamy kolejn¹*/
+                        if (!fits)
+                            continue;
+		
+                        anything_fits = true;
+
+                        if (sum_value > current_best_value)
+                        {
+                            current_best_value = sum_value;
+                            current_best_weight = sum_weight;
+                            currentBest = i;
+                        }
+                }
+        }
+        
+        if (!anything_fits){
+            System.out.println("Żaden przedmiot nie mieści się w plecaku!");
+            return; 
+        }
+        
+        /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
+	for (int k = 0; k < num_items; k++)
+	{
+		long current_perm = currentBest;
+		
+		if (((current_perm >> k) & 1) != 1)
+			continue;
+
+		/*Dodajemy przedmiot do rozwi¹zania*/
+
+		this.backpack.add(this.items.get(k));
+	}
+	
+        System.out.println("Plecak zapakowany!");
+    }
+    
     @Override
     public String toString(){
         String ret = "Lista przedmiotów do zapakowania:\n";
