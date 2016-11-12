@@ -21,13 +21,15 @@ public class BackpackProblem {
     public static void main(String[] args) {
         
         BackpackImpl plecak = new BackpackImpl();
-        plecak.fillFromFile("plecaczek.txt");
-        
+       plecak.fillFromFile("plecaczek.txt");
+     /*
         System.out.print(plecak);
         
         plecak.packBrute();
 
-        System.out.println(plecak);
+        System.out.println(plecak);*/
+
+        plecak.packDivideAndCurb();
     }
     
 }

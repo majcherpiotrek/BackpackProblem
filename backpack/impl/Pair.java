@@ -44,7 +44,10 @@ public class Pair <T,X> {
     }
 
     public static int integerComparator(Pair <Integer, Integer>a, Pair <Integer, Integer>b){
-        return (int)(a.getValue().doubleValue()/a.getSize().doubleValue() - b.getValue().doubleValue()/b.getSize().doubleValue());
+        Double aRatio = a.getValue().doubleValue()/a.getSize().doubleValue();
+        Double bRatio = b.getValue().doubleValue()/b.getSize().doubleValue();
+        return aRatio> bRatio? -1:
+                (aRatio< bRatio? 1:0);
 
     }
 

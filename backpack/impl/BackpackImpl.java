@@ -2,6 +2,7 @@ package backpack.impl;
 
 import backpack.Backpack;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import java.io.File;
@@ -52,27 +53,16 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
     public void fillFromFile(String filename) {
         /*
         Na stronie jest napisane, że w pliku wejściowym jest tylko liczba elementów i kolejne pary i nic
-        nie jest napisane o rozmiarze plecaka, co wydaje się trochę bez sensu. Dlatego tutaj dodałem, że w pierwszej
-        linii oprócz liczby elementów jest też rozmiar plecaka.
+        nie jest napisane o rozmiarze plecaka, co wydaje się trochę bez sensu.
+        W pierwszej linii bedzie wielkość plecaka
         */
         File file = new File(filename);
-        int num_items;
-        
         try {
             Scanner input = new Scanner(file);
-            num_items = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
-            this.backpack_size = input.nextInt(); //wczytujemy rozmiar plecaka 
-            
-            for(int i = 0; i < num_items; i++){
-                int size, value;
-                
-                size = input.nextInt();
-                value = input.nextInt();
-                
-                itemsToPut.add(new Pair(size, value));
-            }
-               
-        } catch (IOException ex) {
+            backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
+            while(input.hasNextLine())
+                itemsToPut.add(new Pair(input.nextInt(), input.nextInt()));
+        }catch (FileNotFoundException ex){
             System.out.printf("ERROR: %s\n", ex);
         }
     }
@@ -89,6 +79,8 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
         
         return val;
     }
+
+
     public void packBrute(){
 
         if( this.itemsToPut.isEmpty() ){
@@ -194,6 +186,12 @@ public class BackpackImpl implements Backpack <Integer,Integer>{
 
         System.out.println("Plecak zapakowany!");
     }
+
+    public void packDivideAndCurb(){
+        itemsToPut.sort(Pair::integerComparator);
+        System.out.println(itemsToPut);
+    }
+
     @Override
     public String toString(){
         String ret = "Lista przedmiotów do zapakowania:\n";
