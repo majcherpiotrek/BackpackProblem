@@ -5,9 +5,8 @@
  */
 package backpack;
 
+
 import backpack.impl.BackpackImpl;
-
-
 
 /**
  *
@@ -26,10 +25,11 @@ public class BackpackProblem {
         System.out.print(plecak);
         
         plecak.packBrute();
-
-        System.out.println(plecak);*/
+*/
 
         plecak.packDivideAndCurb();
+
+        System.out.println(plecak);
     }
     
 }
