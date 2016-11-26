@@ -14,6 +14,9 @@ import java.util.Scanner;
  * BackPack
  */
 public class BackpackImpl implements Backpack<Integer, Integer> {
+    public static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";
+    public static final String TOO_MUCH_ITEMS_FOR_BRUTE_FORCE = "Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ";
+    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 27;
     private ArrayList<Pair<Integer, Integer>> itemsToPut;
     private ArrayList<Pair<Integer, Integer>> itemsInBackpack;
     private Integer backpack_size;
@@ -57,8 +60,8 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
         nie jest napisane o rozmiarze plecaka, co wydaje się trochę bez sensu.
         W pierwszej linii bedzie wielkość plecaka
         */
-        File file = new File(filename);
         try {
+            File file = new File(filename);
             Scanner input = new Scanner(file);
             backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
             while (input.hasNextLine())
@@ -69,28 +72,23 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
     }
 
     public int getBackpackValue() {
-
         if (this.itemsInBackpack.isEmpty())
             return 0;
-
-        int val = 0;
-
-        for (int i = 0; i < this.itemsInBackpack.size(); i++)
-            val += this.itemsInBackpack.get(i).getValue();
-
-        return val;
+        final Integer[] val = {0};
+        itemsInBackpack.forEach(e -> val[0] += e.getValue());
+        return val[0];
     }
 
 
     public void packBrute() {
 
         if (this.itemsToPut.isEmpty()) {
-            System.out.println("Nie ma przedmiotów do zapakowania!");
+            System.out.println(NOTHING_TO_PACK);
             return;
         }
 
-        if (this.itemsToPut.size() > 27) {
-            System.out.println("Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ");
+        if (this.itemsToPut.size() > MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE) {
+            System.out.println(TOO_MUCH_ITEMS_FOR_BRUTE_FORCE);
             return;
         }
 
