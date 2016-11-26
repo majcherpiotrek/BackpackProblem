@@ -2,6 +2,7 @@ package backpack.test;
 
 import backpack.Backpack;
 import backpack.impl.BackpackImpl;
+import backpack.impl.BranchAndBoundAlgorithm;
 import backpack.impl.Pair;
 import junit.framework.TestCase;
 
@@ -13,11 +14,10 @@ import java.util.ArrayList;
  */
 public class BackpackImplTest extends TestCase {
     private ArrayList<Pair<Integer, Integer>> testItems = new ArrayList<Pair<Integer, Integer>>(){{
-        this.add(new Pair<>(2, 2));
-        this.add(new Pair<>(1, 2));
-        this.add(new Pair<>(5, 2));
-        this.add(new Pair<>(2, 3));
-        this.add(new Pair<>(1, 4));
+        this.add(new Pair<>(2,40));
+        this.add(new Pair<>(5,30));
+        this.add(new Pair<>(10,50));
+        this.add(new Pair<>(5,10));
         }};
 
     private Backpack getInitializedBackpack() {
@@ -35,16 +35,11 @@ public class BackpackImplTest extends TestCase {
         assertEquals(new Integer(15), backpack.getSize());
     }
 
-    public void testGetItemsToPut() throws Exception {
-        Backpack backpack = getInitializedBackpack();
-        assertEquals(5, backpack.getItemsToPut().size());
-        for(int i=0; i<backpack.getItemsToPut().size();i++){
-            assertEquals(testItems.get(i),backpack.getItemsToPut().get(i));
-        }
-    }
 
-    public void testFillFromFile() throws Exception {
-        assertEquals(0,1);
+    public void testBranchAndBoundAlgorithm(){
+        BranchAndBoundAlgorithm branchAndBoundAlgorithm = new BranchAndBoundAlgorithm(testItems,16.0);
+        branchAndBoundAlgorithm.startBranchAndBound();
+        System.out.println(branchAndBoundAlgorithm.getResults());
     }
 
 }

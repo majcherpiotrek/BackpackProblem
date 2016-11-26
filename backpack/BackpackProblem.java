@@ -27,7 +27,8 @@ public class BackpackProblem {
         plecak.packBrute();
 */
 
-        plecak.packDivideAndCurb();
+
+        //plecak();
 
         System.out.println(plecak);
     }

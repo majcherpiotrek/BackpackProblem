@@ -183,26 +183,6 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
         System.out.println("Plecak zapakowany!");
     }
 
-    public void packDivideAndCurb() {
-        itemsToPut.sort(Pair::integerComparator);
-        Double topBoarder = countTopBoarder();
-
-    }
-
-    private Double countTopBoarder() {
-        Double topBoarder = 0.0;
-        Integer actualSize = 0;
-        for (Pair<Integer, Integer> item : itemsToPut) {
-            if (actualSize+item.getSize() <= backpack_size) {
-                topBoarder += item.getValue();
-                actualSize += item.getSize();
-            }
-            else {
-                return topBoarder+(backpack_size*1.0 - actualSize*1.0)/(item.getSize()*1.0);
-            }
-        }
-        return topBoarder;
-    }
 
     @Override
     public String toString() {
