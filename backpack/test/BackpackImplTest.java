@@ -37,9 +37,11 @@ public class BackpackImplTest extends TestCase {
 
 
     public void testBranchAndBoundAlgorithm(){
-        BranchAndBoundAlgorithm branchAndBoundAlgorithm = new BranchAndBoundAlgorithm(testItems,16.0);
+        BackpackImpl backpack = new BackpackImpl();
+        backpack.fillFromFile("backpack/sack1.txt");
+        BranchAndBoundAlgorithm branchAndBoundAlgorithm = new BranchAndBoundAlgorithm(backpack.getItemsToPut(),10.0);
         branchAndBoundAlgorithm.startBranchAndBound();
-        System.out.println(branchAndBoundAlgorithm.getResults());
+        System.out.println(branchAndBoundAlgorithm.getBestItems());
     }
 
 }

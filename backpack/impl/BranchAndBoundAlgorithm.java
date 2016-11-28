@@ -9,7 +9,9 @@ import java.util.List;
 public class BranchAndBoundAlgorithm {
 
     private List<Pair<Integer, Integer>> itemsToPut;
+
     private Double backpackSize;
+
     private Double actualBestWealth = 0.0;
     private ArrayList<Boolean> actualBestItems;
 
@@ -18,8 +20,6 @@ public class BranchAndBoundAlgorithm {
         this.backpackSize = backpackSize;
         initializeActualBestWithZeros(itemsToPut);
     }
-
-
     public void startBranchAndBound() {
 
         itemsToPut.sort(Pair::integerComparator);
@@ -33,7 +33,8 @@ public class BranchAndBoundAlgorithm {
 
     }
 
-    public ArrayList<Pair<Integer, Integer>> getResults() {
+
+    public ArrayList<Pair<Integer, Integer>> getBestItems() {
         ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
         for (int i = 0; i < actualBestItems.size(); i++) {
             if (actualBestItems.get(i)) {
@@ -43,6 +44,25 @@ public class BranchAndBoundAlgorithm {
         return result;
     }
 
+    public Double getBestSize(){
+        Double val=0.0;
+        for (int i = 0; i < actualBestItems.size(); i++) {
+            if (actualBestItems.get(i)) {
+                val+=itemsToPut.get(i).getSize();
+            }
+        }
+        return val;
+    }
+
+    public Double getBestValue(){
+        Double size=0.0;
+        for (int i = 0; i < actualBestItems.size(); i++) {
+            if (actualBestItems.get(i)) {
+                size+=itemsToPut.get(i).getValue();
+            }
+        }
+        return size;
+    }
     private void function(ArrayList<Boolean> items, Double wealthOfItemsAlreadyIn, Double sizeOfItemsAlreadyIn, Integer recursionLevel) {
         Pair<Integer, Integer> consideredItem = itemsToPut.get(recursionLevel);
         if (isPuttedToBackpack(items, recursionLevel)) {
@@ -62,7 +82,6 @@ public class BranchAndBoundAlgorithm {
 
 
     }
-
     private void startFunctionOnSons(ArrayList<Boolean> items, Double wealthOfItemsAlreadyIn, Double sizeOfItemsAlreadyIn, Integer recursionLevel) {
         recursionLevel++;
 
@@ -70,6 +89,10 @@ public class BranchAndBoundAlgorithm {
         function(items, wealthOfItemsAlreadyIn, sizeOfItemsAlreadyIn, recursionLevel);
         items.set(recursionLevel, false);
         function(items, wealthOfItemsAlreadyIn, sizeOfItemsAlreadyIn, recursionLevel);
+    }
+
+    public Double getBackpackSize() {
+        return backpackSize;
     }
 
     private void makeItNewBest(ArrayList<Boolean> items, Double wealthOfItemsAlreadyIn) {

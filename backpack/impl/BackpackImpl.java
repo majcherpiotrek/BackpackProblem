@@ -63,7 +63,7 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
         try {
             File file = new File(filename);
             Scanner input = new Scanner(file);
-            backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
+            //backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
             while (input.hasNextLine())
                 itemsToPut.add(new Pair(input.nextInt(), input.nextInt()));
         } catch (FileNotFoundException ex) {
@@ -194,13 +194,6 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
 
         ret += "\n";
 
-        ret += "Plecak (rozmiar: " + this.backpack_size + ", wartość przedmiotów: " + this.getBackpackValue() + "):\n";
-
-        if (this.itemsInBackpack.isEmpty())
-            ret += "Plecak jest pusty!\n";
-        else
-            for (int i = 0; i < this.itemsInBackpack.size(); i++)
-                ret += this.itemsInBackpack.get(i).toString() + "\n";
         return ret;
     }
 }
