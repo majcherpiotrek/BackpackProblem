@@ -8,6 +8,7 @@ package backpack;
 
 import backpack.impl.BackpackImpl;
 import backpack.impl.BranchAndBoundAlgorithm;
+import backpack.impl.BruteForceAlgorithm;
 import backpack.impl.Pair;
 
 import java.lang.reflect.Array;
@@ -29,11 +30,22 @@ public class BackpackProblem {
      */
     public static void main(String[] args) {
 
-        ArrayList<Pair<Integer,Integer>> problem = ItemsListGenerator.generateInstance(20,30,100);
+        ArrayList<Pair<Integer,Integer>> problem = ItemsListGenerator.generateInstance(25,30,100);
         ItemsListFileSaver fileOutput = new ItemsListFileSaver(problem);
         fileOutput.saveToFile("problem");
 
-        Scanner scanner = new Scanner(System.in);
+
+        double bbTime, bfTime;
+        BackpackImpl backpack = new BackpackImpl(ItemsListFileLoader.loadFromFile("problem"), 60);
+
+        BranchAndBoundAlgorithm bb = new BranchAndBoundAlgorithm(backpack.getItemsToPut(),(double)backpack.getSize());
+        BruteForceAlgorithm bf = new BruteForceAlgorithm(backpack.getItemsToPut(), backpack.getSize());
+
+        bbTime = AlgorithmPeformanceTests.elapsedTimeMilisec_BB(bb);
+        bfTime = AlgorithmPeformanceTests.elapsedTimeMilisec_BF(bf);
+
+        System.out.println("Time bb: " + bbTime + "\nTime brute force: " + bfTime);
+       /* Scanner scanner = new Scanner(System.in);
         while (!Objects.equals(scanner.nextLine(), "k")) {
 
             BackpackImpl plecak = new BackpackImpl();
@@ -52,7 +64,7 @@ public class BackpackProblem {
 
 
         }
-
+*/
      /*
         System.out.print(plecak);
 
