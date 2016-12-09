@@ -54,21 +54,8 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
     }
 
     @Override
-    public void fillFromFile(String filename) {
-        /*
-        Na stronie jest napisane, że w pliku wejściowym jest tylko liczba elementów i kolejne pary i nic
-        nie jest napisane o rozmiarze plecaka, co wydaje się trochę bez sensu.
-        W pierwszej linii bedzie wielkość plecaka
-        */
-        try {
-            File file = new File(filename);
-            Scanner input = new Scanner(file);
-            //backpack_size = input.nextInt(); //wczytujemy liczbę przedmiotów w pliku wejściowym
-            while (input.hasNextLine())
-                itemsToPut.add(new Pair(input.nextInt(), input.nextInt()));
-        } catch (FileNotFoundException ex) {
-            System.out.printf("ERROR: %s\n", ex);
-        }
+    public void setItemsToPut(ArrayList<Pair<Integer,Integer>> itemsList) {
+        itemsToPut = itemsList;
     }
 
     public int getBackpackValue() {

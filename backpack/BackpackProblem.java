@@ -8,10 +8,17 @@ package backpack;
 
 import backpack.impl.BackpackImpl;
 import backpack.impl.BranchAndBoundAlgorithm;
+import backpack.impl.Pair;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/*TODO
+
+-polepszyć menu -> obsługa podania złej nazwy pliku
+ */
 /**
  * @author piotr
  */
@@ -22,23 +29,27 @@ public class BackpackProblem {
      */
     public static void main(String[] args) {
 
+        ArrayList<Pair<Integer,Integer>> problem = ItemsListGenerator.generateInstance(20,30,100);
+        ItemsListFileSaver fileOutput = new ItemsListFileSaver(problem);
+        fileOutput.saveToFile("problem");
+
         Scanner scanner = new Scanner(System.in);
         while (!Objects.equals(scanner.nextLine(), "k")) {
-            System.out.println("podaj nazwe pliku: ");
-            String fileName = scanner.nextLine();
+
             BackpackImpl plecak = new BackpackImpl();
-            plecak.fillFromFile("/home/adam/Workspace/JAVA_v2/BackpackProblem/backpack/" + fileName);
+            ArrayList<Pair<Integer,Integer>> prob = ItemsListFileLoader.loadFromFile("problem");
+            plecak.setItemsToPut(prob);
             System.out.println("Podaj rozmiar plecaka: ");
             Double size = (double) scanner.nextInt();
 
-            /*System.out.println(plecak);
+            System.out.println(plecak);
             BranchAndBoundAlgorithm branchAndBoundAlgorithm = new BranchAndBoundAlgorithm(plecak.getItemsToPut(), size);
             branchAndBoundAlgorithm.startBranchAndBound();
             System.out.println("backpack size: " + branchAndBoundAlgorithm.getBackpackSize());
             System.out.println("best Size: " + branchAndBoundAlgorithm.getBestSize());
             System.out.println("best Value: " + branchAndBoundAlgorithm.getBestValue());
             System.out.println(branchAndBoundAlgorithm.getBestItems());
-            */
+
 
         }
 

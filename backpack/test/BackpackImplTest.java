@@ -1,6 +1,8 @@
 package backpack.test;
 
 import backpack.Backpack;
+import backpack.ItemsListFileLoader;
+import backpack.ItemsListGenerator;
 import backpack.impl.BackpackImpl;
 import backpack.impl.BranchAndBoundAlgorithm;
 import backpack.impl.Pair;
@@ -38,7 +40,8 @@ public class BackpackImplTest extends TestCase {
 
     public void testBranchAndBoundAlgorithm(){
         BackpackImpl backpack = new BackpackImpl();
-        backpack.fillFromFile("backpack/sack1.txt");
+        ArrayList<Pair<Integer,Integer>> prob = ItemsListGenerator.generateInstance(100,50,200);
+        backpack.setItemsToPut(prob);
         BranchAndBoundAlgorithm branchAndBoundAlgorithm = new BranchAndBoundAlgorithm(backpack.getItemsToPut(),10.0);
         branchAndBoundAlgorithm.startBranchAndBound();
         System.out.println(branchAndBoundAlgorithm.getBestItems());
