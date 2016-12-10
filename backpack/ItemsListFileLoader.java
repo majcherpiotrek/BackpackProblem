@@ -12,19 +12,17 @@ import java.util.Scanner;
  */
 public class ItemsListFileLoader {
 
-    public static ArrayList<Pair<Integer,Integer>> loadFromFile(String fileName){
+    public static ArrayList<Pair<Integer,Integer>> loadFromFile (String fileName) throws FileNotFoundException{
 
         ArrayList<Pair<Integer,Integer>> itemsList = new ArrayList<>();
 
-        try {
-            File file = new File(fileName);
-            Scanner input = new Scanner(file);
 
-            while (input.hasNextLine())
-                itemsList.add(new Pair(input.nextInt(), input.nextInt()));
-        } catch (FileNotFoundException ex) {
-            System.err.printf("ERROR: %s\n", ex);
-        }
+        File file = new File(fileName);
+        Scanner input = new Scanner(file);
+
+        while (input.hasNextLine())
+            itemsList.add(new Pair(input.nextInt(), input.nextInt()));
+
 
         return itemsList;
     }

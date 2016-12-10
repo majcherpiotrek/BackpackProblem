@@ -11,6 +11,7 @@ import backpack.impl.BranchAndBoundAlgorithm;
 import backpack.impl.BruteForceAlgorithm;
 import backpack.impl.Pair;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -144,16 +145,20 @@ public class BackpackProblem extends Application{
             }
             else{
                 ArrayList<Pair<Integer,Integer>> problemInstance;
-                problemInstance = ItemsListFileLoader.loadFromFile(fileName);
-
-                if(problemInstance != null){
-                    backpack.setItemsToPut(problemInstance);
-                    isInstanceLoaded = true;
-                    algorithmResultsTextArea.setStyle("-fx-text-fill: green");
-                    algorithmResultsTextArea.appendText("Załadowano instancję problemu z pliku "+fileName+"\n");
-                    instanceLoadStatusLabel.setTextFill(Color.GREEN);
-                    instanceLoadStatusLabel.setText("Załadowano instancję problemu.");
-                }else{
+                try{
+                    problemInstance = ItemsListFileLoader.loadFromFile(fileName);
+                    if(problemInstance.isEmpty()){
+                        backpack.setItemsToPut(problemInstance);
+                        isInstanceLoaded = true;
+                        algorithmResultsTextArea.setStyle("-fx-text-fill: green");
+                        algorithmResultsTextArea.appendText("Załadowano instancję problemu z pliku "+fileName+"\n");
+                        instanceLoadStatusLabel.setTextFill(Color.GREEN);
+                        instanceLoadStatusLabel.setText("Załadowano instancję problemu.");
+                    }else{
+                        algorithmResultsTextArea.setStyle("-fx-text-fill: red");
+                        algorithmResultsTextArea.appendText("Plik jest pusty!\n");
+                    }
+                }catch(FileNotFoundException ex){
                     algorithmResultsTextArea.setStyle("-fx-text-fill: red");
                     algorithmResultsTextArea.appendText("Nie ma takiego pliku!\n");
                 }
