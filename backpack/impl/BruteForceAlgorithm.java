@@ -1,22 +1,25 @@
 package backpack.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.pow;
 
 /**
  * Created by piotrek on 09.12.16.
  */
 public class BruteForceAlgorithm {
 
-    public static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";
-    public static final String TOO_MUCH_ITEMS_FOR_BRUTE_FORCE = "Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ";
-    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 30;
+    private static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";
+    private static final String TOO_MUCH_ITEMS_FOR_BRUTE_FORCE = "Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ";
+    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 34;
 
     private List<Pair<Integer, Integer>> itemsToPut;
 
     private Integer backpackSize;
 
-    public ArrayList<Boolean> packedItems;
+    private ArrayList<Boolean> packedItems;
 
     public BruteForceAlgorithm(List<Pair<Integer, Integer>> itemsToPut, Integer backpackSize) {
         this.itemsToPut = itemsToPut;
@@ -36,8 +39,8 @@ public class BruteForceAlgorithm {
             return;
         }
 
-        int num_items = this.itemsToPut.size();
-        long combinations = 1 << num_items;
+        Integer num_items = this.itemsToPut.size();
+        long combinations = (long) pow(2,num_items);
 
         long currentBest = 0;
         int current_best_value = 0;
@@ -84,16 +87,9 @@ public class BruteForceAlgorithm {
                 sum_weight += this.itemsToPut.get(k).getSize();
                 sum_value += this.itemsToPut.get(k).getValue();
 
-                if (sum_weight > backpackSize) {
-                    fits = false;
-                    break;
-                }
-
-                fits = true;
-
-                        /*Jeœli suma wag przedmiotów kombinacji wiêksza ni¿ pojemnoœæ plecaka to sprawdzamy kolejn¹*/
-                if (!fits)
+                if (sum_weight > backpackSize)
                     continue;
+                        /*Jeœli suma wag przedmiotów kombinacji wiêksza ni¿ pojemnoœæ plecaka to sprawdzamy kolejn¹*/
 
                 anything_fits = true;
 
@@ -112,9 +108,8 @@ public class BruteForceAlgorithm {
 
         /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
         for (int k = 0; k < num_items; k++) {
-            long current_perm = currentBest;
 
-            if (((current_perm >> k) & 1) != 1)
+            if (((currentBest >> k) & 1) != 1)
                 continue;
 
 

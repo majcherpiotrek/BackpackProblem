@@ -277,7 +277,7 @@ public class BackpackProblem extends Application{
                         }
 
                         case "Brute force":{
-                            if(backpack.getItemsToPut().size() > 30){
+                            if(backpack.getItemsToPut().size() > BruteForceAlgorithm.MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE){
                                 algorithmResultsTextArea.setStyle("-fx-text-fill: red");
                                 algorithmResultsTextArea.appendText("Zbyt duży rozmiar instancji! Max to 30!\n");
                             }
