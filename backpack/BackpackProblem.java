@@ -147,7 +147,7 @@ public class BackpackProblem extends Application{
                 ArrayList<Pair<Integer,Integer>> problemInstance;
                 try{
                     problemInstance = ItemsListFileLoader.loadFromFile(fileName);
-                    if(problemInstance.isEmpty()){
+                    if(!problemInstance.isEmpty()){
                         backpack.setItemsToPut(problemInstance);
                         isInstanceLoaded = true;
                         algorithmResultsTextArea.setStyle("-fx-text-fill: green");

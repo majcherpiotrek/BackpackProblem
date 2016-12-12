@@ -10,7 +10,7 @@ public class BruteForceAlgorithm {
 
     public static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";
     public static final String TOO_MUCH_ITEMS_FOR_BRUTE_FORCE = "Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ";
-    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 27;
+    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 30;
 
     private List<Pair<Integer, Integer>> itemsToPut;
 
