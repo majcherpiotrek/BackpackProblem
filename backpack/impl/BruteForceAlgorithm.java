@@ -1,19 +1,19 @@
 package backpack.impl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.pow;
 
 /**
+ * Klasa do rozwiązywania problemu plecakowego za pomocą algorytmu branch&bound
  * Created by piotrek on 09.12.16.
  */
 public class BruteForceAlgorithm {
 
     private static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";
     private static final String TOO_MUCH_ITEMS_FOR_BRUTE_FORCE = "Zbyt wiele przedmiotów do zapakowania. Algorytm przeglądu zupełnego niemożliwy. ";
-    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 34;
+    public static final int MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE = 50;
 
     private List<Pair<Integer, Integer>> itemsToPut;
 
@@ -44,7 +44,6 @@ public class BruteForceAlgorithm {
 
         long currentBest = 0;
         int current_best_value = 0;
-        int current_best_weight = 0;
 
         boolean anything_fits = false;
 
@@ -58,7 +57,6 @@ public class BruteForceAlgorithm {
             int sum_weight = 0;
             int sum_value = 0;
 
-            boolean fits = false;
             long current_perm;
 
             /*Przechodzimy po wszystkich przedmiotach, ¿eby sprawdziæ, czy nale¿¹ do danej kombinacji*/
@@ -95,7 +93,6 @@ public class BruteForceAlgorithm {
 
                 if (sum_value > current_best_value) {
                     current_best_value = sum_value;
-                    current_best_weight = sum_weight;
                     currentBest = i;
                 }
             }
