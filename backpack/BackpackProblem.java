@@ -278,11 +278,11 @@ public class BackpackProblem extends Application{
                             DynamicProgrammingAlgorithm algorithm = new DynamicProgrammingAlgorithm(backpack.getItemsToPut(), backpack_size);
                             algorithm.startDynamicProgramming();
                             algorithmResultsTextArea.setStyle("-fx-text-fill: black");
-                            algorithmResultsTextArea.appendText("Wyniki wykonania algorytmu:\n" //+
-                                   // "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
-                                    //"Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
-                                    //"Zapakowane przedmioty:\n" +
-                                    //algorithm.getBestItems().toString()
+                            algorithmResultsTextArea.appendText("Wyniki wykonania algorytmu:\n" +
+                                   "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
+                                            "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
+                                    "Zapakowane przedmioty:\n" +
+                                    algorithm.getBestItems().toString()
                             );
                             break;
                         }

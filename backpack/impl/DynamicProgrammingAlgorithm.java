@@ -12,10 +12,32 @@ public class DynamicProgrammingAlgorithm {
     private Integer backpackSize;
     private Integer itemsNum;
     private List<Pair<Integer,Integer>> itemsToPut;
-    private Integer[][] backpackContentValues;
-    private Integer[][] lastPackedItems;
+    private int[][] backpackContentValues;
+    private int[][] lastPackedItems;
     private Integer bestSize;
     private Integer bestValue;
+
+    public Integer getBackpackSize() {
+        return backpackSize;
+    }
+
+    public Integer getBestSize() {
+        return bestSize;
+    }
+
+    public Integer getBestValue() {
+        return bestValue;
+    }
+
+    public ArrayList<Pair<Integer,Integer>> getBestItems(){
+        ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
+        for (int i = 0; i < packedItems.size(); i++) {
+            if (packedItems.get(i)) {
+                result.add(itemsToPut.get(i));
+            }
+        }
+        return result;
+    }
     private ArrayList<Boolean> packedItems;
 
     public DynamicProgrammingAlgorithm(List<Pair<Integer,Integer>> itemsToPut, Integer bpSize){
@@ -25,12 +47,14 @@ public class DynamicProgrammingAlgorithm {
         this.bestSize = 0;
         this.bestValue = 0;
         this.packedItems = new ArrayList<>();
+        for (int i = 0; i < this.itemsNum ; i++)
+            this.packedItems.add(false);
 
         //Tworzymy macierz na wartości upakowań plecaka o rozmiarze liczba przedmiotów x rozmiar plecaka
-        this.backpackContentValues = new Integer[this.itemsNum+1][this.backpackSize+1];
+        this.backpackContentValues = new int[this.itemsNum+1][this.backpackSize+1];
 
         //Tworzymy macierz, przechowującą informacje o tym, który przedmiot został zapakowany jako ostatni przy danym upakowaniu
-        this.lastPackedItems = new Integer[this.itemsNum+1][this.backpackSize+1];
+        this.lastPackedItems = new int[this.itemsNum+1][this.backpackSize+1];
     }
 
     public void startDynamicProgramming(){
@@ -71,18 +95,23 @@ public class DynamicProgrammingAlgorithm {
                     }
                 }
         }
+        backtracePackedItems();
     }
 
     private void backtracePackedItems(){
-        //wpisać do tablicy packedItems informacje o zapakowanych przedmiotach
-        /*
-        1. Sprawdzamy ostatni zapakowany element w ostatniej komórce macierzy.
-        2. Przechodzimy do tego rzędu mcierzy.
-        3. Oznaczamy jako zapakowany.
-        4.Cofamy się o stopnień wyżej i o rozmiar tego przedmiotu w lewo
-        5. Sprawdzamy ostatni zapakowany przedmiot i wracamy do kroku 2.
+        int j = this.backpackSize;
+        int item;
 
-         */
+        while(j > 0){
+            item = lastPackedItems[this.itemsNum][j];
+            if(item <= 0)
+                break;
+            packedItems.set(item-1, true);
+            j -= itemsToPut.get(item-1).getSize();
+            this.bestSize += itemsToPut.get(item-1).getSize();
+            this.bestValue += itemsToPut.get(item-1).getValue();
+        }
+
     }
 
 }
