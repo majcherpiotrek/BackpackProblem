@@ -14,11 +14,17 @@ public class DynamicProgrammingAlgorithm {
     private List<Pair<Integer,Integer>> itemsToPut;
     private Integer[][] backpackContentValues;
     private Integer[][] lastPackedItems;
+    private Integer bestSize;
+    private Integer bestValue;
+    private ArrayList<Boolean> packedItems;
 
     public DynamicProgrammingAlgorithm(List<Pair<Integer,Integer>> itemsToPut, Integer bpSize){
         this.itemsToPut = itemsToPut;
         this.backpackSize = bpSize;
         this.itemsNum = itemsToPut.size();
+        this.bestSize = 0;
+        this.bestValue = 0;
+        this.packedItems = new ArrayList<>();
 
         //Tworzymy macierz na wartości upakowań plecaka o rozmiarze liczba przedmiotów x rozmiar plecaka
         this.backpackContentValues = new Integer[this.itemsNum+1][this.backpackSize+1];
@@ -52,6 +58,7 @@ public class DynamicProgrammingAlgorithm {
             //Pętla przechodząca przez wszystkie rozmiary placaka
             for(int j = 0; j < backpackSize+1; j++)
                 if(j < itemsToPut.get(i-1).getSize()){
+                //jeśli przedmiot nie mieści się w plecaku
                     backpackContentValues[i][j] = backpackContentValues[i-1][j];
                     lastPackedItems[i][j] = lastPackedItems[i-1][j];
                 }
@@ -65,5 +72,17 @@ public class DynamicProgrammingAlgorithm {
                 }
         }
     }
-    
+
+    private void backtracePackedItems(){
+        //wpisać do tablicy packedItems informacje o zapakowanych przedmiotach
+        /*
+        1. Sprawdzamy ostatni zapakowany element w ostatniej komórce macierzy.
+        2. Przechodzimy do tego rzędu mcierzy.
+        3. Oznaczamy jako zapakowany.
+        4.Cofamy się o stopnień wyżej i o rozmiar tego przedmiotu w lewo
+        5. Sprawdzamy ostatni zapakowany przedmiot i wracamy do kroku 2.
+
+         */
+    }
+
 }
