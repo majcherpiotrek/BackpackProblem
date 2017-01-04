@@ -269,7 +269,7 @@ public class BackpackProblem extends Application{
                                     "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
                                     "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
                                             "Zapakowane przedmioty:\n" +
-                                            algorithm.getBestItems().toString()
+                                            algorithm.getBestItems().toString()+"\n"
                                     );
                             break;
                         }
@@ -282,7 +282,7 @@ public class BackpackProblem extends Application{
                                    "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
                                             "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
                                     "Zapakowane przedmioty:\n" +
-                                    algorithm.getBestItems().toString()
+                                    algorithm.getBestItems().toString()+"\n"
                             );
                             break;
                         }
@@ -299,7 +299,7 @@ public class BackpackProblem extends Application{
                                         "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
                                         "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
                                         "Zapakowane przedmioty:\n" +
-                                        algorithm.getBestItems().toString()
+                                        algorithm.getBestItems().toString()+"\n"
                                 );
                             }
                             break;

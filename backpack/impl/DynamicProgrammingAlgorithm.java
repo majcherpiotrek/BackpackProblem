@@ -103,18 +103,17 @@ public class DynamicProgrammingAlgorithm {
     }
 
     private void backtracePackedItems(){
+        int i = this.itemsNum;
         int j = this.backpackSize;
-        int item;
-
-        while(j > 0){
-            item = lastPackedItems[this.itemsNum][j];
-            if(item <= 0)
-                break;
-            packedItems.set(item-1, true);
-            j -= itemsToPut.get(item-1).getSize();
-            this.bestSize += itemsToPut.get(item-1).getSize();
+        int item = lastPackedItems[i][j];
+        while(item >= 1){
+            packedItems.set(item-1,true);
+            int itemSize = itemsToPut.get(item-1).getSize();
+            this.bestSize += itemSize;
+            i = item-1;
+            j = j - itemSize;
+            item = lastPackedItems[i][j];
         }
-
     }
 
 }
