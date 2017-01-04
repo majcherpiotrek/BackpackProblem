@@ -77,10 +77,10 @@ public class DynamicProgrammingAlgorithm {
          */
 
         //Pętla przechodząca przez wszystkie przedmioty
-        for(int i = 1; i < itemsNum+1; i++){
+        for(int i = 1; i <= itemsNum; i++){
 
             //Pętla przechodząca przez wszystkie rozmiary placaka
-            for(int j = 0; j < backpackSize+1; j++)
+            for(int j = 0; j <= backpackSize; j++)
                 if(j < itemsToPut.get(i-1).getSize()){
                 //jeśli przedmiot nie mieści się w plecaku
                     backpackContentValues[i][j] = backpackContentValues[i-1][j];
@@ -92,9 +92,13 @@ public class DynamicProgrammingAlgorithm {
                     if(packed > notPacked){
                         backpackContentValues[i][j] = packed;
                         lastPackedItems[i][j] = i;
+                    }else{
+                        backpackContentValues[i][j] = backpackContentValues[i-1][j];
+                        lastPackedItems[i][j] = lastPackedItems[i-1][j];
                     }
                 }
         }
+        this.bestValue = backpackContentValues[this.itemsNum][this.backpackSize];
         backtracePackedItems();
     }
 
@@ -109,7 +113,6 @@ public class DynamicProgrammingAlgorithm {
             packedItems.set(item-1, true);
             j -= itemsToPut.get(item-1).getSize();
             this.bestSize += itemsToPut.get(item-1).getSize();
-            this.bestValue += itemsToPut.get(item-1).getValue();
         }
 
     }
