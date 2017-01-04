@@ -3,6 +3,7 @@ package backpack;
 import backpack.impl.BackpackImpl;
 import backpack.impl.BranchAndBoundAlgorithm;
 import backpack.impl.BruteForceAlgorithm;
+import backpack.impl.DynamicProgrammingAlgorithm;
 
 import static java.lang.System.nanoTime;
 
@@ -27,6 +28,17 @@ public class AlgorithmPeformanceTests {
 
         start = nanoTime();
         bruteForce.startBruteForce();
+        elapsedTimeNano = nanoTime() - start;
+
+        return (double)elapsedTimeNano/(double)1000000;
+    }
+
+    public static double elapsedTimeMilisec_DP(DynamicProgrammingAlgorithm dynamicProg){
+        long start;
+        long elapsedTimeNano;
+
+        start = nanoTime();
+        dynamicProg.startDynamicProgramming();
         elapsedTimeNano = nanoTime() - start;
 
         return (double)elapsedTimeNano/(double)1000000;
