@@ -9,6 +9,14 @@ import static java.lang.Math.pow;
  * Klasa do rozwiązywania problemu plecakowego za pomocą algorytmu branch&bound
  * Created by piotrek on 09.12.16.
  */
+
+/*
+TODO
+1. Uzyskiwanie listy zapakowanych przedmiotów (backtrace)
+2. Uzyskiwanie rozmiaru zapakowanych przedmiotów.
+3. Uzyskiwanie wartości zapakowanych przedmiotów.
+4. Odkomentowanie pozyskiwania wyniku działania algorytmu w GUI
+ */
 public class BruteForceAlgorithm {
 
     private static final String NOTHING_TO_PACK = "Nie ma przedmiotów do zapakowania!";

@@ -6,10 +6,7 @@
 package backpack;
 
 
-import backpack.impl.BackpackImpl;
-import backpack.impl.BranchAndBoundAlgorithm;
-import backpack.impl.BruteForceAlgorithm;
-import backpack.impl.Pair;
+import backpack.impl.*;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -112,6 +109,7 @@ public class BackpackProblem extends Application{
 
         ChoiceBox<String> algorithmChoiceBox = new ChoiceBox<>();
         algorithmChoiceBox.getItems().add("Branch&Bound");
+        algorithmChoiceBox.getItems().add("Dynamic programming");
         algorithmChoiceBox.getItems().add("Brute force");
         algorithmChoiceBox.setValue(algorithmChoiceBox.getItems().get(0));
 
@@ -271,11 +269,23 @@ public class BackpackProblem extends Application{
                                     "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
                                     "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
                                             "Zapakowane przedmioty:\n" +
-                                            algorithm.getBestItems().toString()
+                                            algorithm.getBestItems().toString()+"\n"
                                     );
                             break;
                         }
 
+                        case "Dynamic programming":{
+                            DynamicProgrammingAlgorithm algorithm = new DynamicProgrammingAlgorithm(backpack.getItemsToPut(), backpack_size);
+                            algorithm.startDynamicProgramming();
+                            algorithmResultsTextArea.setStyle("-fx-text-fill: black");
+                            algorithmResultsTextArea.appendText("Wyniki wykonania algorytmu:\n" +
+                                   "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
+                                            "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
+                                    "Zapakowane przedmioty:\n" +
+                                    algorithm.getBestItems().toString()+"\n"
+                            );
+                            break;
+                        }
                         case "Brute force":{
                             if(backpack.getItemsToPut().size() > BruteForceAlgorithm.MAX_COUNT_OF_ITEMS_FOR_BRUTEFORCE){
                                 algorithmResultsTextArea.setStyle("-fx-text-fill: red");
@@ -289,7 +299,7 @@ public class BackpackProblem extends Application{
                                         "Zapakowano: " + algorithm.getBestSize() + "/" + algorithm.getBackpackSize() + "\n" +
                                         "Wartość zapakowanych przedmiotów: " + algorithm.getBestValue() + "\n" +
                                         "Zapakowane przedmioty:\n" +
-                                        algorithm.getBestItems().toString()
+                                        algorithm.getBestItems().toString()+"\n"
                                 );
                             }
                             break;

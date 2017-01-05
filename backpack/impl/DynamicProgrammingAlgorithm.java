@@ -12,19 +12,49 @@ public class DynamicProgrammingAlgorithm {
     private Integer backpackSize;
     private Integer itemsNum;
     private List<Pair<Integer,Integer>> itemsToPut;
-    private Integer[][] backpackContentValues;
-    private Integer[][] lastPackedItems;
+    private int[][] backpackContentValues;
+    private int[][] lastPackedItems;
+    private Integer bestSize;
+    private Integer bestValue;
+
+    public Integer getBackpackSize() {
+        return backpackSize;
+    }
+
+    public Integer getBestSize() {
+        return bestSize;
+    }
+
+    public Integer getBestValue() {
+        return bestValue;
+    }
+
+    public ArrayList<Pair<Integer,Integer>> getBestItems(){
+        ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
+        for (int i = 0; i < packedItems.size(); i++) {
+            if (packedItems.get(i)) {
+                result.add(itemsToPut.get(i));
+            }
+        }
+        return result;
+    }
+    private ArrayList<Boolean> packedItems;
 
     public DynamicProgrammingAlgorithm(List<Pair<Integer,Integer>> itemsToPut, Integer bpSize){
         this.itemsToPut = itemsToPut;
         this.backpackSize = bpSize;
         this.itemsNum = itemsToPut.size();
+        this.bestSize = 0;
+        this.bestValue = 0;
+        this.packedItems = new ArrayList<>();
+        for (int i = 0; i < this.itemsNum ; i++)
+            this.packedItems.add(false);
 
         //Tworzymy macierz na wartości upakowań plecaka o rozmiarze liczba przedmiotów x rozmiar plecaka
-        this.backpackContentValues = new Integer[this.itemsNum+1][this.backpackSize+1];
+        this.backpackContentValues = new int[this.itemsNum+1][this.backpackSize+1];
 
         //Tworzymy macierz, przechowującą informacje o tym, który przedmiot został zapakowany jako ostatni przy danym upakowaniu
-        this.lastPackedItems = new Integer[this.itemsNum+1][this.backpackSize+1];
+        this.lastPackedItems = new int[this.itemsNum+1][this.backpackSize+1];
     }
 
     public void startDynamicProgramming(){
@@ -47,11 +77,12 @@ public class DynamicProgrammingAlgorithm {
          */
 
         //Pętla przechodząca przez wszystkie przedmioty
-        for(int i = 1; i < itemsNum+1; i++){
+        for(int i = 1; i <= itemsNum; i++){
 
             //Pętla przechodząca przez wszystkie rozmiary placaka
-            for(int j = 0; j < backpackSize+1; j++)
+            for(int j = 0; j <= backpackSize; j++)
                 if(j < itemsToPut.get(i-1).getSize()){
+                //jeśli przedmiot nie mieści się w plecaku
                     backpackContentValues[i][j] = backpackContentValues[i-1][j];
                     lastPackedItems[i][j] = lastPackedItems[i-1][j];
                 }
@@ -61,9 +92,28 @@ public class DynamicProgrammingAlgorithm {
                     if(packed > notPacked){
                         backpackContentValues[i][j] = packed;
                         lastPackedItems[i][j] = i;
+                    }else{
+                        backpackContentValues[i][j] = backpackContentValues[i-1][j];
+                        lastPackedItems[i][j] = lastPackedItems[i-1][j];
                     }
                 }
         }
+        this.bestValue = backpackContentValues[this.itemsNum][this.backpackSize];
+        backtracePackedItems();
     }
-    
+
+    private void backtracePackedItems(){
+        int i = this.itemsNum;
+        int j = this.backpackSize;
+        int item = lastPackedItems[i][j];
+        while(item >= 1){
+            packedItems.set(item-1,true);
+            int itemSize = itemsToPut.get(item-1).getSize();
+            this.bestSize += itemSize;
+            i = item-1;
+            j = j - itemSize;
+            item = lastPackedItems[i][j];
+        }
+    }
+
 }
