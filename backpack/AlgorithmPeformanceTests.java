@@ -1,9 +1,6 @@
 package backpack;
 
-import backpack.impl.BackpackImpl;
-import backpack.impl.BranchAndBoundAlgorithm;
-import backpack.impl.BruteForceAlgorithm;
-import backpack.impl.DynamicProgrammingAlgorithm;
+import backpack.impl.*;
 
 import static java.lang.System.nanoTime;
 
@@ -39,6 +36,17 @@ public class AlgorithmPeformanceTests {
 
         start = nanoTime();
         dynamicProg.startDynamicProgramming();
+        elapsedTimeNano = nanoTime() - start;
+
+        return (double)elapsedTimeNano/(double)1000000;
+    }
+
+    public static double elapsedTimeMilisec(FPTASSchema fptasSchema){
+        long start;
+        long elapsedTimeNano;
+
+        start = nanoTime();
+        fptasSchema.startFPTASSchema();
         elapsedTimeNano = nanoTime() - start;
 
         return (double)elapsedTimeNano/(double)1000000;

@@ -17,29 +17,7 @@ public class DynamicProgrammingAlgorithm {
     private Integer bestSize;
     private Integer bestValue;
 
-    public Integer getBackpackSize() {
-        return backpackSize;
-    }
-
-    public Integer getBestSize() {
-        return bestSize;
-    }
-
-    public Integer getBestValue() {
-        return bestValue;
-    }
-
-    public ArrayList<Pair<Integer,Integer>> getBestItems(){
-        ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
-        for (int i = 0; i < packedItems.size(); i++) {
-            if (packedItems.get(i)) {
-                result.add(itemsToPut.get(i));
-            }
-        }
-        return result;
-    }
     private ArrayList<Boolean> packedItems;
-
     public DynamicProgrammingAlgorithm(List<Pair<Integer,Integer>> itemsToPut, Integer bpSize){
         this.itemsToPut = itemsToPut;
         this.backpackSize = bpSize;
@@ -100,6 +78,28 @@ public class DynamicProgrammingAlgorithm {
         }
         this.bestValue = backpackContentValues[this.itemsNum][this.backpackSize];
         backtracePackedItems();
+    }
+
+    public ArrayList<Pair<Integer,Integer>> getBestItems(){
+        ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
+        for (int i = 0; i < packedItems.size(); i++) {
+            if (packedItems.get(i)) {
+                result.add(itemsToPut.get(i));
+            }
+        }
+        return result;
+    }
+
+    public Integer getBackpackSize() {
+        return backpackSize;
+    }
+
+    public Integer getBestSize() {
+        return bestSize;
+    }
+
+    public Integer getBestValue() {
+        return bestValue;
     }
 
     private void backtracePackedItems(){

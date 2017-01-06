@@ -11,11 +11,15 @@ public class Pair <T,X> {
         this.value = v;
         this.size = s;
     }
+
     public X getValue(){
         return this.value;
     }
     public T getSize(){
         return this.size;
+    }
+    public Pair<T,X> getCopy(){
+        return new Pair<T, X>(this.size, this.value);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Pair <T,X> {
         return ret;
     }
 
-    public static int integerComparator(Pair <Integer, Integer>a, Pair <Integer, Integer>b){
+    static int integerComparator(Pair<Integer, Integer> a, Pair<Integer, Integer> b){
         Double aRatio = a.getValue().doubleValue()/a.getSize().doubleValue();
         Double bRatio = b.getValue().doubleValue()/b.getSize().doubleValue();
         return aRatio> bRatio? -1:
@@ -51,4 +55,11 @@ public class Pair <T,X> {
 
     }
 
+    public void setSize(T size) {
+        this.size = size;
+    }
+
+    public void setValue(X value) {
+        this.value = value;
+    }
 }

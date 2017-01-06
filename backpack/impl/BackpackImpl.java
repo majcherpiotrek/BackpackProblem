@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -79,5 +80,14 @@ public class BackpackImpl implements Backpack<Integer, Integer> {
         ret += "\n";
 
         return ret;
+    }
+
+    static Integer getMaxItemValue(List<Pair<Integer, Integer>> itemsToPut) {
+        Integer maxVal = 0;
+        for (Pair<Integer, Integer> item : itemsToPut) {
+            if (item.getValue()>maxVal)
+                maxVal=item.getValue();
+        }
+        return maxVal;
     }
 }
