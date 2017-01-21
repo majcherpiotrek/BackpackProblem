@@ -41,6 +41,7 @@ public class FPTASSchema {
     private void scaleItemsToPut() {
         scaledItemsToPut = getCopyOfListOfPairs(originalItemsToPut);
         scaleCoefficient = countScaleCoefficient(BackpackImpl.getMaxItemValue(originalItemsToPut));
+        System.out.println(scaleCoefficient);
         scaledItemsToPut.forEach(e -> e.setValue((int) (e.getValue() / scaleCoefficient)));
         initializeMapOfScaledItems();
     }
