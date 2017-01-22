@@ -56,7 +56,7 @@ public class DynamicProgrammingAlgorithm {
             Q[i][j] = i || Q[i-1][j] //(zależnie od tego, co zwróciło max())
         end if
          */
-        System.out.println(max_value * itemsNum);
+//        System.out.println(max_value * itemsNum);
         //Pętla przechodząca przez wszystkie przedmioty
         for (int i = 1; i <= itemsNum; i++) {
 
@@ -78,7 +78,17 @@ public class DynamicProgrammingAlgorithm {
                     }
                 }
         }
+//        printBackpack();
         backtracePackedItems();
+    }
+
+    private void printBackpack() {
+        for (int i = 1; i <= itemsNum; i++) {
+            for (int j = 1; j < max_value * itemsNum; j++) {
+                System.out.print(String.format("%-4s" , backpackContentValues[i][j]));
+            }
+            System.out.print("\n");
+        }
     }
 
     private void setMaxValue(List<Pair<Integer, Integer>> itemsToPut) {

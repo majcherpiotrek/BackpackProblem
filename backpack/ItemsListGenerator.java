@@ -35,4 +35,22 @@ public class ItemsListGenerator {
 
         return itemsList;
     }
+    public static ArrayList<Pair<Integer,Integer>> generateInstance(int instanceSize, int sizeMax, int valueMax, int valueMin){
+
+        Random generator = new Random();
+        ArrayList<Pair<Integer,Integer>> itemsList = new ArrayList<>();
+
+        for (int i = 0; i < instanceSize; i++) {
+
+            //generujemy rozmiar przedmiotu z zakresu <1,N>, N - rozmiar instancji
+            Integer size = abs(generator.nextInt()%sizeMax) + 1;
+            //generujemy wartość przedmiotu z zakresu <1,10*N>
+            Integer value = abs(valueMin + generator.nextInt()%(valueMax-valueMin)) +1;
+
+            //dodajemy przedmiot do listy
+            itemsList.add(i, new Pair<>(size,value));
+        }
+
+        return itemsList;
+    }
 }
